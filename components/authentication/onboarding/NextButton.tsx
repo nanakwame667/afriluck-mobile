@@ -1,15 +1,30 @@
-import { View, Animated, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Animated,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import React, { useEffect, useRef } from "react";
 import Svg, { G, Circle } from "react-native-svg";
 import colors from "../../../colors";
 import { AntDesign } from "@expo/vector-icons";
+import { SlidesData } from "../../../data/slides";
+import Button from "../../button";
 
 interface NextButtonProps {
   percentage: number;
   scrollTo: () => void;
+  currentIndex: number;
+  navigation: any;
 }
 
-const NextButton: React.FC<NextButtonProps> = ({ percentage, scrollTo }) => {
+const NextButton: React.FC<NextButtonProps> = ({
+  percentage,
+  scrollTo,
+  currentIndex,
+  navigation,
+}) => {
   const size = 100;
   const strokeWidth = 3;
   const center = size / 2;
@@ -46,36 +61,44 @@ const NextButton: React.FC<NextButtonProps> = ({ percentage, scrollTo }) => {
       progressAnimation.removeAllListeners();
     };
   }, [circumference, progressAnimation]);
-
+  const navigateToSignUp = () => {
+    navigation.navigate("SignUp");
+  };
   return (
     <View style={styles.container}>
-      <Svg width={size} height={size}>
-        <G rotation="-90" origin={center}>
-          <Circle
-            cx={center}
-            cy={center}
-            r={radius}
-            strokeWidth={strokeWidth}
-            stroke={colors.space}
-          />
-          <Circle
-            ref={progressRef}
-            cx={center}
-            cy={center}
-            r={radius}
-            strokeWidth={strokeWidth}
-            stroke={colors.primary}
-            strokeDasharray={[circumference]}
-          />
-        </G>
-      </Svg>
-      <TouchableOpacity
-        onPress={scrollTo}
-        activeOpacity={0.6}
-        style={styles.button}
-      >
-        <AntDesign name="arrowright" size={24} color="#fff" />
-      </TouchableOpacity>
+      {currentIndex < SlidesData.length - 1 && (
+        <Svg width={size} height={size}>
+          <G rotation="-90" origin={center}>
+            <Circle
+              cx={center}
+              cy={center}
+              r={radius}
+              strokeWidth={strokeWidth}
+              stroke={colors.space}
+            />
+            <Circle
+              ref={progressRef}
+              cx={center}
+              cy={center}
+              r={radius}
+              strokeWidth={strokeWidth}
+              stroke={colors.primary}
+              strokeDasharray={[circumference]}
+            />
+          </G>
+        </Svg>
+      )}
+      {currentIndex === SlidesData.length - 1 ? (
+        <Button title="Get Started" onPress={navigateToSignUp} />
+      ) : (
+        <TouchableOpacity
+          onPress={scrollTo}
+          activeOpacity={0.6}
+          style={styles.button}
+        >
+          <AntDesign name="arrowright" size={24} color="#fff" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
