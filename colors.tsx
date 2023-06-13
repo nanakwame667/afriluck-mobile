@@ -6,6 +6,7 @@ type Colors = {
   accent: string;
   text: string;
   background: string;
+  space: string;
 };
 
 const colors: Colors = {
@@ -16,6 +17,7 @@ const colors: Colors = {
   accent: "#1AA9B0",
   text: "#848484",
   background: "#FFFFFF",
+  space: "#BCBCBC",
 };
 
 export default colors;
