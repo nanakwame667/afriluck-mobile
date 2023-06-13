@@ -3,11 +3,10 @@ import SplashScreen from "../screens/SplashScreen";
 import One from "../components/authentication/onboarding/one";
 import Two from "../components/authentication/onboarding/two";
 import GetStarted from "../components/authentication/onboarding/getStarted";
-import Login from "../components/authentication/login";
-import SignUp from "../components/authentication/signup";
-import SignUp2 from "../components/authentication/signup2";
-import EmailVerification from "../components/authentication/emailVerification";
-import ForgotPassword from "../components/authentication/forgotPassword";
+import LoginScreen from "../screens/authentication/LoginScreen";
+import SignUpScreen from "../screens/authentication/SignUpScreen";
+import EmailVerificationScreen from "../screens/authentication/EmailVerificationScreen";
+import ForgotPasswordScreen from "../screens/authentication/ForgotPasswordScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -36,27 +35,22 @@ const AuthNavigator = () => {
       />
       <Stack.Screen
         name="Login"
-        component={Login}
+        component={LoginScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name="SignUp"
-        component={SignUp}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SignUp2"
-        component={SignUp2}
+        component={SignUpScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name="EmailVerification"
-        component={EmailVerification}
+        component={EmailVerificationScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name="ForgotPassword"
-        component={ForgotPassword}
+        component={ForgotPasswordScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -1,11 +1,13 @@
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import React from "react";
+import globalStyles from "../../../styles/globalStyles";
 
 const One = () => {
+  const { container, text } = globalStyles;
   return (
-    <View>
-      <Text>Onboarding One</Text>
-    </View>
+    <SafeAreaView style={container}>
+      <Text style={text}>Onboarding One</Text>
+    </SafeAreaView>
   );
 };
 
