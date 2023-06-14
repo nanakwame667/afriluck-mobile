@@ -45,7 +45,7 @@ const LoginScreen = () => {
   }, [navigation]);
 
   const formik = useFormik({
-    initialValues: { phoneNumber: "0554588483", password: "pass" },
+    initialValues: { phoneNumber: "", password: "" },
     validationSchema,
     onSubmit: () => {
       if (formik.isValid) {

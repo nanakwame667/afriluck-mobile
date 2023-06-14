@@ -25,7 +25,7 @@ interface InputFieldProps extends TextInputProps {
     | "search"
     | "datepicker";
   label?: string;
-  error?: string;
+  error?: string | boolean | undefined;
   onEnterPress?: (value: string) => void;
   characterLimit?: number;
   required?: boolean;
