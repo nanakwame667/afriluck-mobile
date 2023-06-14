@@ -10,7 +10,7 @@ import Svg, { G, Circle } from "react-native-svg";
 import colors from "../../../colors";
 import { AntDesign } from "@expo/vector-icons";
 import { SlidesData } from "../../../data/slides";
-import Button from "../../button";
+import Button from "../../Button";
 
 interface NextButtonProps {
   percentage: number;
@@ -62,7 +62,7 @@ const NextButton: React.FC<NextButtonProps> = ({
     };
   }, [circumference, progressAnimation]);
   const navigateToSignUp = () => {
-    navigation.navigate("SignUp");
+    navigation.navigate("Login");
   };
   return (
     <View style={styles.container}>

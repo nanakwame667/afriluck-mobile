@@ -7,6 +7,7 @@ type Colors = {
   text: string;
   background: string;
   space: string;
+  icon: string;
 };
 
 const colors: Colors = {
@@ -18,6 +19,7 @@ const colors: Colors = {
   text: "#848484",
   background: "#FFFFFF",
   space: "#BCBCBC",
+  icon: "#D8D8D8",
 };
 
 export default colors;

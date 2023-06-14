@@ -25,11 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[
-        styles.button,
-        { backgroundColor: color },
-        { width: width * 0.9 },
-      ]}
+      style={[styles.button, { backgroundColor: color }]}
     >
       <Text style={[styles.text, { color: textColor }]}>{title}</Text>
     </TouchableOpacity>
@@ -39,12 +35,13 @@ const Button: React.FC<ButtonProps> = ({
 const styles = StyleSheet.create({
   button: {
     display: "flex",
-    height: 60,
-    borderRadius: 5,
+    height: 65,
+    borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
     paddingHorizontal: 20,
+    width: "100%",
   },
   text: {
     fontSize: 16,
