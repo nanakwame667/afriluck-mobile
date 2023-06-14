@@ -1,6 +1,6 @@
 import React from "react";
 import SplashScreen from "../screens/SplashScreen";
-import One from "../components/authentication/onboarding/one";
+import Onboarding from "../components/authentication/onboarding/Onboarding";
 import LoginScreen from "../screens/authentication/LoginScreen";
 import SignUpScreen from "../screens/authentication/SignUpScreen";
 import EmailVerificationScreen from "../screens/authentication/EmailVerificationScreen";
@@ -28,7 +28,7 @@ const AuthNavigator = () => {
       />
       <Stack.Screen
         name="One"
-        component={One}
+        component={Onboarding}
         options={{ headerShown: false }}
       />
       <Stack.Screen
