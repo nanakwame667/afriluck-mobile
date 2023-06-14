@@ -101,14 +101,26 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
               />
             </View>
           ) : fieldType === "textarea" ? (
-            <TextInput
-              {...props}
-              ref={ref}
-              multiline
-              style={[styles.input, styles.textArea]}
-              keyboardType={keyboardType}
-              onChangeText={handleInputChange}
-            />
+            <View style={styles.inputContainer}>
+              <TextInput
+                {...props}
+                ref={ref}
+                multiline
+                style={[styles.input, styles.textArea]}
+                keyboardType={keyboardType}
+                onChangeText={handleInputChange}
+              />
+            </View>
+          ) : fieldType === "email" ? (
+            <View style={styles.inputContainer}>
+              <TextInput
+                {...props}
+                ref={ref}
+                style={[styles.input, styles.textArea]}
+                keyboardType={keyboardType}
+                onChangeText={handleInputChange}
+              />
+            </View>
           ) : fieldType === "datepicker" ? (
             <View style={styles.inputContainer}>
               <TextInput
@@ -139,13 +151,15 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
               textContainerStyle={{ backgroundColor: "transparent" }}
             />
           ) : (
-            <TextInput
-              {...props}
-              ref={ref}
-              style={styles.input}
-              keyboardType={keyboardType}
-              onChangeText={handleInputChange}
-            />
+            <View style={styles.inputContainer}>
+              <TextInput
+                {...props}
+                ref={ref}
+                style={styles.input}
+                keyboardType={keyboardType}
+                onChangeText={handleInputChange}
+              />
+            </View>
           )}
           {error && <Text style={styles.error}>{error}</Text>}
           {characterLimit && remainingChars !== undefined && (

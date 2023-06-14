@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Keyboard,
   Image,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import InputField from "../../components/InputField";
@@ -18,9 +19,17 @@ import colors from "../../colors";
 import CheckBox from "../../components/CheckBox";
 import { NavigationProp } from "@react-navigation/native";
 import { StackParamList } from "../../navigations/AuthNavigator";
+import { StackParamList2 } from "../../navigations/MainNavigator";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
+const validationSchema = yup.object().shape({
+  phoneNumber: yup.string().required("Phone Number is required"),
+  password: yup.string().required("Password is required"),
+});
 const LoginScreen = () => {
-  const navigation = useNavigation<NavigationProp<StackParamList>>();
+  const navigation =
+    useNavigation<NavigationProp<StackParamList & StackParamList2>>();
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckedChanged = useCallback((checked: boolean) => {
@@ -28,16 +37,27 @@ const LoginScreen = () => {
   }, []);
 
   const handleForgotPasswordPress = useCallback(() => {
-    navigation.navigate("ForgotPassword");
+    navigation.navigate("EmailVerification");
   }, [navigation]);
 
   const handleCreateAccountPress = useCallback(() => {
     navigation.navigate("SignUp");
   }, [navigation]);
 
-  const handleLoginPress = useCallback(() => {
-    alert("Hello");
-  }, []);
+  const formik = useFormik({
+    initialValues: { phoneNumber: "0554588483", password: "pass" },
+    validationSchema,
+    onSubmit: () => {
+      if (formik.isValid) {
+        navigation.navigate("HomeScreen");
+      } else {
+        Alert.alert(
+          "Validation Error",
+          "Please fill in all the required fields."
+        );
+      }
+    },
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -57,11 +77,17 @@ const LoginScreen = () => {
               placeholder="Enter your number"
               fieldType="phoneNumber"
               label="Phone Number"
+              value={formik.values.phoneNumber}
+              onChangeText={formik.handleChange("phoneNumber")}
+              error={formik.errors.phoneNumber}
             />
             <InputField
               placeholder="Enter your password"
               fieldType="password"
               label="Password"
+              value={formik.values.password}
+              onChangeText={formik.handleChange("password")}
+              error={formik.errors.password}
             />
             <View style={styles.checkboxContainer}>
               <CheckBox
@@ -77,7 +103,7 @@ const LoginScreen = () => {
             <TouchableOpacity onPress={handleCreateAccountPress}>
               <Text style={styles.account}>Create An Account</Text>
             </TouchableOpacity>
-            <Button title="Login" onPress={handleLoginPress} />
+            <Button title="Login" onPress={() => formik.handleSubmit()} />
           </View>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
@@ -100,6 +126,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginBottom: 20,
+    width: "50%",
+    height: "10%",
   },
   welcome: {
     color: colors.primary,
@@ -136,7 +164,6 @@ const styles = StyleSheet.create({
     color: colors.accent,
     fontSize: 18,
     fontWeight: "600",
-    textDecoration: "underline",
     marginVertical: 20,
   },
 });
