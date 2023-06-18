@@ -8,12 +8,16 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 import colors from "../colors";
 import PhoneNumberInput from "react-native-phone-number-input";
 import PhoneInput from "react-native-phone-number-input";
+import format from "date-fns/format";
 
 interface InputFieldProps extends TextInputProps {
   fieldType?:
@@ -45,6 +49,7 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
     ref
   ) => {
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [showDatePicker, setShowDatePicker] = useState(false);
     const [date, setDate] = useState<Date | null>(null);
     const [remainingChars, setRemainingChars] = useState(characterLimit);
     const phoneInputRef = useRef<PhoneInput>(null);
@@ -65,9 +70,10 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
       setPasswordVisible(!passwordVisible);
     };
 
-    const handleDateChange = (event: any, selectedDate?: Date) => {
+    const handleDateChange = (_: DateTimePickerEvent, selectedDate?: Date) => {
       const currentDate = selectedDate || date;
       setDate(currentDate);
+      setShowDatePicker(Platform.OS === "ios"); // keep date picker open on iOS after date selection
     };
 
     const keyboardTypeMap: { [key: string]: any } = {
@@ -78,6 +84,10 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
     };
 
     const keyboardType = keyboardTypeMap[fieldType || "text"];
+
+    const handleDatePress = () => {
+      setShowDatePicker(true);
+    };
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -123,22 +133,30 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
             </View>
           ) : fieldType === "datepicker" ? (
             <View style={styles.inputContainer}>
-              <TextInput
-                {...props}
-                ref={ref}
-                editable={false}
-                value={date ? date.toISOString() : ""}
-                style={styles.input}
-                keyboardType={keyboardType}
-              />
-              {Platform.OS === "android" && (
+              <TouchableOpacity
+                onPress={handleDatePress}
+                style={styles.inputWrapper}
+              >
+                <TextInput
+                  {...props}
+                  ref={ref}
+                  editable={false}
+                  placeholder={date ? format(date, "MM-dd-yyyy") : "MM-DD-YYYY"}
+                  style={styles.input}
+                />
+              </TouchableOpacity>
+              {showDatePicker && (
                 <DateTimePicker
                   value={date || new Date()}
                   mode="date"
-                  display="default"
+                  display="calendar"
                   onChange={handleDateChange}
+                  // style={{ display: "none" }} // Hide the date picker
                 />
               )}
+              <TouchableOpacity onPress={handleDatePress}>
+                <FontAwesome name="calendar" size={22} color="gray" />
+              </TouchableOpacity>
             </View>
           ) : fieldType === "phoneNumber" ? (
             <PhoneInput
@@ -199,6 +217,11 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     height: 64,
     width: "100%",
+  },
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
   },
   input: {
     flex: 1,

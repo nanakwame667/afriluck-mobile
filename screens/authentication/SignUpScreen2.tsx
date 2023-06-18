@@ -18,46 +18,55 @@ import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import colors from "../../colors";
 import CheckBox from "../../components/CheckBox";
+import InputDropdown from "../../components/InputDropdown";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
-  fullname: yup
+  network: yup
     .string()
-    .min(2, "Full Name must be at least 2 characters")
-    .max(50, "Full Name can't be longer than 50 characters")
-    .required("Full Name is required"),
-  email: yup
+    .oneOf(["MTN", "Vodafone ", "Airtel Tigo"], "Invalid network option")
+    .required("Network is required"),
+  sex: yup
     .string()
-    .email("Please enter a valid email address")
-    .required("Email is required"),
-  username: yup
+    .oneOf(["Male", "Female", "Other"], "Invalid sex option")
+    .required("Sex is required"),
+  dob: yup
+    .date()
+    .max(new Date(), "Date of Birth must be in the past")
+    .required("Date of Birth is required"),
+  newPassword: yup
     .string()
-    .min(4, "Username must be at least 4 characters")
-    .max(20, "Username can't be longer than 20 characters")
-    .required("Username is required"),
-  phoneNumber: yup
+    .min(8, "Password must be at least 8 characters")
+    .required("New Password is required"),
+  confirmPassword: yup
     .string()
-    .matches(
-      /^(\+\d{1,3}[- ]?)?\d{10}$/,
-      "Phone number must be 10 digits and may include a country code"
-    )
-    .required("Phone Number is required"),
+    .oneOf([yup.ref("newPassword")], "Passwords must match")
+    .required("Confirm Password is required"),
 });
-const SignUpScreen = () => {
+const SignUpScreenTwo = () => {
   const navigation = useNavigation<NavigationProp<StackParamList>>();
+  const handleOptionSelected = (option: string) => {
+    console.log("Selected option:", option);
+  };
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckedChanged = useCallback((checked: boolean) => {
+    setIsChecked(checked);
+  }, []);
 
   const formik = useFormik({
     initialValues: {
-      fullname: "",
-      email: "",
-      username: "",
-      phoneNumber: "",
+      network: "",
+      sex: "",
+      dob: "",
+      newPassword: "",
+      confirmPassword: "",
     },
     validationSchema,
     onSubmit: () => {
       if (formik.isValid) {
-        navigation.navigate("SignUp2");
+        navigation.navigate("Login");
       } else {
         Alert.alert(
           "Validation Error",
@@ -82,39 +91,54 @@ const SignUpScreen = () => {
             <Text style={styles.credentials}>
               Register now to bet on the world’s biggest jackpots
             </Text>
-            <InputField
-              placeholder="Enter your full name"
-              fieldType="text"
-              label="Full Name"
-              value={formik.values.fullname}
-              onChangeText={formik.handleChange("fullname")}
-              error={formik.errors.fullname}
+            <InputDropdown
+              label="Mobile Money Network"
+              options={["MTN", "Vodafone", "Airtel Tigo"]}
+              onOptionSelected={formik.handleChange("network")}
+              id="network"
+              header="Network"
+              fontSize={16}
+              color="black"
+              fontWeight="400"
+            />
+            <InputDropdown
+              label="Sex"
+              options={["Male", "Female", "Other"]}
+              onOptionSelected={formik.handleChange("sex")}
+              id="sex"
+              header="Sex"
+              fontSize={16}
+              color="black"
+              fontWeight="400"
             />
             <InputField
-              placeholder="Enter your username"
-              fieldType="text"
-              label="User Name"
-              value={formik.values.username}
-              onChangeText={formik.handleChange("username")}
-              error={formik.errors.username}
+              fieldType="datepicker"
+              label="Date Of Birth"
+              placeholder="mm-dd-yyyy"
+              value={formik.values.dob}
+              onChangeText={formik.handleChange("dob")}
+              error={formik.errors.dob}
             />
             <InputField
-              placeholder="Enter your email address"
-              fieldType="email"
-              label="Email Address"
-              value={formik.values.email}
-              onChangeText={formik.handleChange("email")}
-              error={formik.errors.email}
+              placeholder="Enter your new password"
+              fieldType="password"
+              label="New Password"
+              value={formik.values.newPassword}
+              onChangeText={formik.handleChange("newPassword")}
+              error={formik.errors.newPassword}
             />
             <InputField
-              placeholder="Enter your number"
-              fieldType="phoneNumber"
-              label="Phone Number"
-              value={formik.values.phoneNumber}
-              onChangeText={formik.handleChange("phoneNumber")}
-              error={formik.errors.phoneNumber}
+              placeholder="Confirm your new password"
+              fieldType="password"
+              label="Confirm Password"
+              value={formik.values.confirmPassword}
+              onChangeText={formik.handleChange("confirmPassword")}
+              error={formik.errors.confirmPassword}
             />
-            <Button title="Continue" onPress={() => formik.handleSubmit()} />
+            <Button
+              title="Create Account"
+              onPress={() => formik.handleSubmit()}
+            />
           </View>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
@@ -134,12 +158,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  names: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
   },
   logo: {
     marginBottom: 20,
@@ -185,4 +203,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default SignUpScreenTwo;
