@@ -5,7 +5,7 @@ import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import AppNavigator from "./navigations/AppNavigator";
-
+import AuthProvider from "./AuthContext/AuthContext";
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -27,10 +27,13 @@ export default function App() {
   if (!fontsLoaded) {
     return null; // Return a loading indicator or placeholder until the fonts are loaded
   }
+
   return (
     <NavigationContainer key={fontsLoaded ? "loaded" : "not-loaded"}>
       <StatusBar style="auto" />
-      <AppNavigator />
+      <AuthProvider>
+        <AppNavigator />
+      </AuthProvider>
     </NavigationContainer>
   );
 }

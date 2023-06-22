@@ -18,7 +18,6 @@ import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import colors from "../../colors";
 import CheckBox from "../../components/CheckBox";
-import InputDropdown from "../../components/InputDropdown";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -91,26 +90,7 @@ const SignUpScreenTwo = () => {
             <Text style={styles.credentials}>
               Register now to bet on the world’s biggest jackpots
             </Text>
-            <InputDropdown
-              label="Mobile Money Network"
-              options={["MTN", "Vodafone", "Airtel Tigo"]}
-              onOptionSelected={formik.handleChange("network")}
-              id="network"
-              header="Network"
-              fontSize={16}
-              color="black"
-              fontWeight="400"
-            />
-            <InputDropdown
-              label="Sex"
-              options={["Male", "Female", "Other"]}
-              onOptionSelected={formik.handleChange("sex")}
-              id="sex"
-              header="Sex"
-              fontSize={16}
-              color="black"
-              fontWeight="400"
-            />
+
             <InputField
               fieldType="datepicker"
               label="Date Of Birth"

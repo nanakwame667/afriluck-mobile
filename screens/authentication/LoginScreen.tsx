@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -22,12 +22,20 @@ import { StackParamList } from "../../navigations/AuthNavigator";
 import { StackParamList2 } from "../../navigations/MainNavigator";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { AuthContext } from "../../AuthContext/AuthContext";
 
 const validationSchema = yup.object().shape({
   phoneNumber: yup.string().required("Phone Number is required"),
   password: yup.string().required("Password is required"),
 });
 const LoginScreen = () => {
+  const authContext = useContext(AuthContext);
+
+  if (!authContext) {
+    throw new Error("LoginScreen must be used within an AuthProvider.");
+  }
+
+  const { setUserAuthenticated } = authContext;
   const navigation =
     useNavigation<NavigationProp<StackParamList & StackParamList2>>();
   const [isChecked, setIsChecked] = useState(false);
@@ -49,7 +57,8 @@ const LoginScreen = () => {
     validationSchema,
     onSubmit: () => {
       if (formik.isValid) {
-        navigation.navigate("HomeScreen");
+        setUserAuthenticated(true);
+        navigation.navigate("Home");
       } else {
         Alert.alert(
           "Validation Error",

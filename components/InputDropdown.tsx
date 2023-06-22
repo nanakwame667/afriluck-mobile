@@ -1,29 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { Button, Menu, Provider } from "react-native-paper";
 
-type FontWeight =
-  | "normal"
-  | "bold"
-  | "100"
-  | "200"
-  | "300"
-  | "400"
-  | "500"
-  | "600"
-  | "700"
-  | "800"
-  | "900";
+interface Option {
+  label: string;
+  value: string;
+}
 
 interface DropdownProps {
   label: string;
-  options: string[];
+  options: Option[];
   onOptionSelected: (option: string) => void;
   id: string;
-  header?: string;
-  fontSize?: number;
-  color?: string;
-  fontWeight?: FontWeight;
   error?: boolean;
 }
 
@@ -32,61 +19,44 @@ const InputDropdown: React.FC<DropdownProps> = ({
   options,
   onOptionSelected,
   id,
-  header,
-  fontSize,
-  color,
-  fontWeight,
   error,
 }) => {
+  const [visible, setVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(label);
 
-  const handleOptionSelected = (option: string) => {
-    setSelectedOption(option);
-    onOptionSelected(option);
+  const openMenu = (): void => setVisible(true);
+
+  const closeMenu = (): void => setVisible(false);
+
+  const handleOptionSelected = (option: Option): void => {
+    setSelectedOption(option.label);
+    onOptionSelected(option.value);
+    closeMenu();
   };
 
+  const errorStyle = error ? { borderColor: "red", borderWidth: 1 } : null;
+
   return (
-    <View style={styles.container}>
-      <Text
-        style={{
-          fontSize: fontSize,
-          color: color,
-          fontWeight: fontWeight,
-        }}
-      >
-        {header}
-      </Text>
-      <Picker
-        selectedValue={selectedOption}
-        onValueChange={handleOptionSelected}
-        style={error ? styles.error : styles.picker}
+    <Provider>
+      <Menu
+        visible={visible}
+        onDismiss={closeMenu}
+        anchor={
+          <Button onPress={openMenu} style={errorStyle}>
+            {selectedOption}
+          </Button>
+        }
       >
         {options.map((option, index) => (
-          <Picker.Item key={index} label={option} value={option} />
+          <Menu.Item
+            key={index}
+            onPress={() => handleOptionSelected(option)}
+            title={option.label}
+          />
         ))}
-      </Picker>
-    </View>
+      </Menu>
+    </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 10,
-  },
-  picker: {
-    height: 50,
-    width: "100%",
-    borderColor: "gray",
-    borderWidth: 1,
-  },
-  error: {
-    height: 50,
-    width: "100%",
-    borderColor: "red",
-    borderWidth: 1,
-  },
-});
 
 export default InputDropdown;
