@@ -30,10 +30,7 @@ const validationSchema = yup.object().shape({
     .string()
     .oneOf(["Male", "Female", "Other"], "Invalid sex option")
     .required("Sex is required"),
-  dob: yup
-    .date()
-    .max(new Date(), "Date of Birth must be in the past")
-    .required("Date of Birth is required"),
+  dob: yup.string().optional(),
   newPassword: yup
     .string()
     .min(8, "Password must be at least 8 characters")
