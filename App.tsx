@@ -6,30 +6,14 @@ import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import AppNavigator from "./navigations/AppNavigator";
 import AuthProvider from "./AuthContext/AuthContext";
+import LoadFonts from "./loadFonts";
 export default function App() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-
-  useEffect(() => {
-    async function loadFonts() {
-      await SplashScreen.preventAutoHideAsync();
-      await Font.loadAsync({
-        Gotham: require("./assets/fonts/Gotham-Book.otf"),
-        GothamMedium: require("./assets/fonts/Gotham-Medium.otf"),
-        GothamBold: require("./assets/fonts/Gotham-Bold.otf"),
-        GothamBlack: require("./assets/fonts/Gotham-Black.otf"),
-      });
-      setFontsLoaded(true);
-      await SplashScreen.hideAsync();
-    }
-    loadFonts();
-  }, []);
-
-  if (!fontsLoaded) {
-    return null; // Return a loading indicator or placeholder until the fonts are loaded
+  const fontLoaded = LoadFonts();
+  if (!fontLoaded) {
+    return null;
   }
-
   return (
-    <NavigationContainer key={fontsLoaded ? "loaded" : "not-loaded"}>
+    <NavigationContainer key={fontLoaded ? "loaded" : "not-loaded"}>
       <StatusBar style="auto" />
       <AuthProvider>
         <AppNavigator />

@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React from "react";
 import colors from "../../../colors";
-
+import { Fonts } from "../../../theme";
 // Define an interface for the item object
 interface Item {
   id: string;
@@ -24,7 +24,7 @@ const OnboardingItem: React.FC<{ item: Item }> = ({ item }) => {
     <View style={[styles.container, { width }]}>
       <Image
         source={item.image}
-        style={[styles.image, { width: width * 0.9, resizeMode: "contain" }]}
+        style={[styles.image, { width: width * 0.8, resizeMode: "contain" }]}
       />
       <View style={{ flex: 0.2, marginLeft: 10, marginRight: 10 }}>
         <Text style={styles.title}>{item.title}</Text>
@@ -41,9 +41,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    fontFamily: Fonts.bold,
   },
   image: {
-    flex: 0.8,
+    flex: 0.7,
     justifyContent: "center",
     marginTop: 4,
   },
@@ -52,12 +53,13 @@ const styles = StyleSheet.create({
     color: colors.heading,
     textAlign: "center",
     fontWeight: "600",
+    fontFamily: Fonts.semibold,
   },
   description: {
     fontSize: 14,
-    fontWeight: "600",
     color: colors.text,
     textAlign: "center",
     marginTop: 15,
+    fontFamily: Fonts.regular,
   },
 });

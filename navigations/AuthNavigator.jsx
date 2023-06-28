@@ -8,17 +8,7 @@ import EmailVerificationScreen from "../screens/authentication/EmailVerification
 import ForgotPasswordScreen from "../screens/authentication/ForgotPasswordScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export type StackParamList = {
-  SplashScreen: undefined;
-  One: undefined;
-  Login: undefined;
-  SignUp: undefined;
-  SignUp2: undefined;
-  EmailVerification: undefined;
-  ForgotPassword: undefined;
-};
-
-const Stack = createNativeStackNavigator<StackParamList>();
+const Stack = createNativeStackNavigator();
 
 const AuthNavigator = () => {
   return (

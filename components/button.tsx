@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import colors from "../colors";
+import { Fonts } from "../theme";
 
 interface ButtonProps {
   title: string;
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 26,
     fontWeight: "600",
+    fontFamily: Fonts.medium,
   },
 });
 

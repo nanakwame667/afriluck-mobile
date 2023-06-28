@@ -16,6 +16,7 @@ import colors from "../../../colors";
 import { SlidesData } from "../../../data/slides";
 import OnboardingItem from "./OnboardingItem";
 import NextButton from "./NextButton";
+import { Fonts } from "../../../theme";
 
 const Onboarding = () => {
   const navigation = useNavigation();
@@ -43,14 +44,16 @@ const Onboarding = () => {
     slideRef.current?.scrollToEnd();
   }, []);
 
-  const viewableItemsChanged = useCallback(
+  const onViewableItemsChanged = useCallback(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
-      setCurrentIndex(viewableItems[0].index || 0);
+      if (viewableItems.length > 0) {
+        setCurrentIndex(viewableItems[0].index!);
+      }
     },
     []
   );
 
-  const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 });
+  const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 50 });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -77,8 +80,8 @@ const Onboarding = () => {
             [{ nativeEvent: { contentOffset: { x: scrollX } } }],
             { useNativeDriver: false }
           )}
-          onViewableItemsChanged={viewableItemsChanged}
-          viewabilityConfig={viewConfig.current}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewConfigRef.current}
           scrollEventThrottle={32}
           ref={slideRef}
         />

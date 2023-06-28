@@ -17,9 +17,7 @@ import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import colors from "../../colors";
 import CheckBox from "../../components/CheckBox";
-import { NavigationProp } from "@react-navigation/native";
-import { StackParamList } from "../../navigations/AuthNavigator";
-import { StackParamList2 } from "../../navigations/MainNavigator";
+
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { AuthContext } from "../../AuthContext/AuthContext";
@@ -30,17 +28,11 @@ const validationSchema = yup.object().shape({
 });
 const LoginScreen = () => {
   const authContext = useContext(AuthContext);
-
-  if (!authContext) {
-    throw new Error("LoginScreen must be used within an AuthProvider.");
-  }
-
   const { setUserAuthenticated } = authContext;
-  const navigation =
-    useNavigation<NavigationProp<StackParamList & StackParamList2>>();
+  const navigation = useNavigation();
   const [isChecked, setIsChecked] = useState(false);
 
-  const handleCheckedChanged = useCallback((checked: boolean) => {
+  const handleCheckedChanged = useCallback((checked) => {
     setIsChecked(checked);
   }, []);
 
@@ -58,7 +50,7 @@ const LoginScreen = () => {
     onSubmit: () => {
       if (formik.isValid) {
         setUserAuthenticated(true);
-        navigation.navigate("Home");
+        navigation.navigate("Tab");
       } else {
         Alert.alert(
           "Validation Error",
@@ -67,7 +59,6 @@ const LoginScreen = () => {
       }
     },
   });
-
   return (
     <SafeAreaView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
