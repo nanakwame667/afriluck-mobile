@@ -9,14 +9,7 @@ import {
 import colors from "../colors";
 import { Fonts } from "../theme";
 
-interface ButtonProps {
-  title: string;
-  onPress: (event: GestureResponderEvent) => void;
-  color?: string;
-  textColor?: string;
-}
-
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
   title,
   onPress,
   color = colors.primary,

@@ -1,34 +1,15 @@
 import React, { useState } from "react";
 import { Button, Menu, Provider } from "react-native-paper";
 
-interface Option {
-  label: string;
-  value: string;
-}
-
-interface DropdownProps {
-  label: string;
-  options: Option[];
-  onOptionSelected: (option: string) => void;
-  id: string;
-  error?: boolean;
-}
-
-const InputDropdown: React.FC<DropdownProps> = ({
-  label,
-  options,
-  onOptionSelected,
-  id,
-  error,
-}) => {
+const InputDropdown = ({ label, options, onOptionSelected, id, error }) => {
   const [visible, setVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(label);
 
-  const openMenu = (): void => setVisible(true);
+  const openMenu = () => setVisible(true);
 
-  const closeMenu = (): void => setVisible(false);
+  const closeMenu = () => setVisible(false);
 
-  const handleOptionSelected = (option: Option): void => {
+  const handleOptionSelected = (option) => {
     setSelectedOption(option.label);
     onOptionSelected(option.value);
     closeMenu();

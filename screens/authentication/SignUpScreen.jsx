@@ -12,8 +12,8 @@ import {
   Image,
   Alert,
 } from "react-native";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { StackParamList } from "../../navigations/AuthNavigator";
+import { useNavigation } from "@react-navigation/native";
+
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import colors from "../../colors";
@@ -45,7 +45,7 @@ const validationSchema = yup.object().shape({
     .required("Phone Number is required"),
 });
 const SignUpScreen = () => {
-  const navigation = useNavigation<NavigationProp<StackParamList>>();
+  const navigation = useNavigation();
 
   const formik = useFormik({
     initialValues: {

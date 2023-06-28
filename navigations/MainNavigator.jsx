@@ -1,9 +1,11 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { View, TouchableOpacity, Image } from "react-native";
-import { Badge, Icon } from "react-native-elements";
+import { Badge } from "react-native-elements";
 import BottomTabNavigator from "./BottomTabNavigator";
 import { useNavigation } from "@react-navigation/native";
+import DrawerNavigator from "./DrawerNavigator";
+import NotificationsScreen from "../screens/NotificationsScreen";
 
 const Stack = createStackNavigator();
 
@@ -18,9 +20,8 @@ const MainNavigator = () => {
         options={{
           headerTitle: "",
           headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
               <Image source={require("../assets/images/menu.png")} />
-              {/* <Icon name="menu" size={25} /> */}
             </TouchableOpacity>
           ),
           headerRight: () => (
@@ -29,10 +30,15 @@ const MainNavigator = () => {
             >
               <View>
                 <Image source={require("../assets/images/bell.png")} />
-                {/* <Icon name="notifications" size={25} /> */}
                 <Badge
                   status="error"
-                  containerStyle={{ position: "absolute", top: -4, right: -4 }}
+                  containerStyle={{
+                    position: "absolute",
+                    top: -3,
+                    right: -2,
+                  }}
+                  badgeStyle={{ width: 10, height: 10, borderRadius: 10 }}
+                  size="large"
                 />
               </View>
             </TouchableOpacity>
@@ -42,6 +48,7 @@ const MainNavigator = () => {
           headerStyle: { backgroundColor: "transparent", height: 150 },
         }}
       />
+      <Stack.Screen name="Notifications" component={NotificationsScreen} />
     </Stack.Navigator>
   );
 };

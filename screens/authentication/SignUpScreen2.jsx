@@ -1,3 +1,4 @@
+import React, { useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -6,36 +7,62 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Keyboard,
   Image,
   Alert,
 } from "react-native";
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StackParamList } from "../../navigations/AuthNavigator";
-import { useFormik } from "formik";
-import * as yup from "yup";
+
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import colors from "../../colors";
-import { NavigationProp } from "@react-navigation/native";
+import CheckBox from "../../components/CheckBox";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
-  email: yup
+  network: yup
     .string()
-    .email("Invalid email address")
-    .required("Email Address is required"),
+    .oneOf(["MTN", "Vodafone ", "Airtel Tigo"], "Invalid network option")
+    .required("Network is required"),
+  sex: yup
+    .string()
+    .oneOf(["Male", "Female", "Other"], "Invalid sex option")
+    .required("Sex is required"),
+  dob: yup.string().optional(),
+  newPassword: yup
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .required("New Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword")], "Passwords must match")
+    .required("Confirm Password is required"),
 });
+const SignUpScreenTwo = () => {
+  const navigation = useNavigation();
+  const handleOptionSelected = (option) => {
+    console.log("Selected option:", option);
+  };
+  const [isChecked, setIsChecked] = useState(false);
 
-const EmailVerificationScreen = () => {
-  const navigation = useNavigation<NavigationProp<StackParamList>>();
+  const handleCheckedChanged = useCallback((checked) => {
+    setIsChecked(checked);
+  }, []);
 
   const formik = useFormik({
-    initialValues: { email: "" },
+    initialValues: {
+      network: "",
+      sex: "",
+      dob: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
     validationSchema,
     onSubmit: () => {
       if (formik.isValid) {
-        navigation.navigate("ForgotPassword");
+        navigation.navigate("Login");
       } else {
         Alert.alert(
           "Validation Error",
@@ -56,22 +83,37 @@ const EmailVerificationScreen = () => {
               source={require("../../assets/images/logo.png")}
               style={styles.logo}
             />
-            <Text style={styles.welcome}>Password Reset</Text>
+            <Text style={styles.welcome}>Create Account</Text>
             <Text style={styles.credentials}>
-              Enter the email address used to sign up with us and we will send
-              an email with instructions on how to reset your password.
+              Register now to bet on the world’s biggest jackpots
             </Text>
-            <InputField
-              placeholder="Enter a valid email address"
-              fieldType="text"
-              label="Email"
-              value={formik.values.email}
-              onChangeText={formik.handleChange("email")}
-              error={formik.errors.email}
-            />
 
+            <InputField
+              fieldType="datepicker"
+              label="Date Of Birth"
+              placeholder="mm-dd-yyyy"
+              value={formik.values.dob}
+              onChangeText={formik.handleChange("dob")}
+              error={formik.errors.dob}
+            />
+            <InputField
+              placeholder="Enter your new password"
+              fieldType="password"
+              label="New Password"
+              value={formik.values.newPassword}
+              onChangeText={formik.handleChange("newPassword")}
+              error={formik.errors.newPassword}
+            />
+            <InputField
+              placeholder="Confirm your new password"
+              fieldType="password"
+              label="Confirm Password"
+              value={formik.values.confirmPassword}
+              onChangeText={formik.handleChange("confirmPassword")}
+              error={formik.errors.confirmPassword}
+            />
             <Button
-              title="Send Instructions"
+              title="Create Account"
               onPress={() => formik.handleSubmit()}
             />
           </View>
@@ -138,4 +180,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EmailVerificationScreen;
+export default SignUpScreenTwo;

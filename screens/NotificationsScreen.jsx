@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const EmailVerification = () => {
+const NotificationsScreen = () => {
   return (
     <View>
-      <Text>EmailVerification</Text>
+      <Text>NotificationsScreen</Text>
     </View>
   );
 };
 
-export default EmailVerification;
+export default NotificationsScreen;

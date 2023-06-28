@@ -12,19 +12,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { SlidesData } from "../../../data/slides";
 import Button from "../../Button";
 
-interface NextButtonProps {
-  percentage: number;
-  scrollTo: () => void;
-  currentIndex: number;
-  navigation: any;
-}
-
-const NextButton: React.FC<NextButtonProps> = ({
-  percentage,
-  scrollTo,
-  currentIndex,
-  navigation,
-}) => {
+const NextButton = ({ percentage, scrollTo, currentIndex, navigation }) => {
   const size = 100;
   const strokeWidth = 3;
   const center = size / 2;
@@ -32,9 +20,9 @@ const NextButton: React.FC<NextButtonProps> = ({
   const circumference = 2 * Math.PI * radius;
 
   const progressAnimation = useRef(new Animated.Value(0)).current;
-  const progressRef = useRef<any>(null);
+  const progressRef = useRef();
 
-  const animation = (toValue: number) => {
+  const animation = (toValue) => {
     return Animated.timing(progressAnimation, {
       toValue,
       duration: 250,

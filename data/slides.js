@@ -1,12 +1,4 @@
-export interface Slide {
-  id: string;
-  title: string;
-  description: string;
-  image: any;
-  button?: string;
-}
-
-export const SlidesData: Slide[] = [
+export const SlidesData = [
   {
     id: "1",
     title: "Welcome to Afriluck Lottery!",

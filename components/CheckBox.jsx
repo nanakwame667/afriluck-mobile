@@ -1,19 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import colors from "../colors";
 
-interface CheckBoxProps {
-  label: string;
-  isChecked?: boolean;
-  onCheckChange?: (checked: boolean) => void;
-}
-
-const CheckBox: FC<CheckBoxProps> = ({
-  label,
-  isChecked = false,
-  onCheckChange,
-}) => {
+const CheckBox = ({ label, isChecked = false, onCheckChange }) => {
   const [checked, setChecked] = useState(isChecked);
 
   const handlePress = () => {

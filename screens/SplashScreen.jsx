@@ -1,16 +1,8 @@
 import { SafeAreaView, Image } from "react-native";
 import React, { useEffect } from "react";
 import globalStyles from "../styles/globalStyles";
-import { StackNavigationProp } from "@react-navigation/stack";
 
-type ParamList = {
-  One: undefined;
-};
-
-interface SplashProps {
-  navigation: StackNavigationProp<ParamList, "One">;
-}
-const SplashScreen: React.FC<SplashProps> = ({ navigation }) => {
+const SplashScreen = ({ navigation }) => {
   const { container } = globalStyles;
 
   useEffect(() => {

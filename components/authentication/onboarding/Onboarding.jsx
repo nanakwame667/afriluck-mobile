@@ -22,7 +22,7 @@ const Onboarding = () => {
   const navigation = useNavigation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
-  const slideRef = useRef<FlatList>(null);
+  const slideRef = useRef(null);
 
   const scrollTop = useCallback(() => {
     if (slideRef.current && currentIndex < SlidesData.length - 1) {
@@ -44,14 +44,11 @@ const Onboarding = () => {
     slideRef.current?.scrollToEnd();
   }, []);
 
-  const onViewableItemsChanged = useCallback(
-    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
-      if (viewableItems.length > 0) {
-        setCurrentIndex(viewableItems[0].index!);
-      }
-    },
-    []
-  );
+  const onViewableItemsChanged = useCallback(({ viewableItems }) => {
+    if (viewableItems.length > 0) {
+      setCurrentIndex(viewableItems[0].index);
+    }
+  }, []);
 
   const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 50 });
 

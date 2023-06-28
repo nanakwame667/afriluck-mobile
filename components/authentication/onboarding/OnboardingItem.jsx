@@ -9,16 +9,9 @@ import React from "react";
 import colors from "../../../colors";
 import { Fonts } from "../../../theme";
 // Define an interface for the item object
-interface Item {
-  id: string;
-  title: string;
-  description: string;
-  image: any;
-  button?: string;
-}
 
 // Use the Item interface to annotate the item prop
-const OnboardingItem: React.FC<{ item: Item }> = ({ item }) => {
+const OnboardingItem = ({ item }) => {
   const { width } = useWindowDimensions();
   return (
     <View style={[styles.container, { width }]}>

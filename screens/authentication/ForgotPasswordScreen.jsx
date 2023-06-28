@@ -12,53 +12,25 @@ import {
   Image,
   Alert,
 } from "react-native";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { StackParamList } from "../../navigations/AuthNavigator";
+import { useNavigation } from "@react-navigation/native";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import colors from "../../colors";
-import CheckBox from "../../components/CheckBox";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
-  network: yup
-    .string()
-    .oneOf(["MTN", "Vodafone ", "Airtel Tigo"], "Invalid network option")
-    .required("Network is required"),
-  sex: yup
-    .string()
-    .oneOf(["Male", "Female", "Other"], "Invalid sex option")
-    .required("Sex is required"),
-  dob: yup.string().optional(),
-  newPassword: yup
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .required("New Password is required"),
+  newPassword: yup.string().required("New Password is required"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("newPassword")], "Passwords must match")
     .required("Confirm Password is required"),
 });
-const SignUpScreenTwo = () => {
-  const navigation = useNavigation<NavigationProp<StackParamList>>();
-  const handleOptionSelected = (option: string) => {
-    console.log("Selected option:", option);
-  };
-  const [isChecked, setIsChecked] = useState(false);
 
-  const handleCheckedChanged = useCallback((checked: boolean) => {
-    setIsChecked(checked);
-  }, []);
-
+const ForgotPasswordScreen = () => {
+  const navigation = useNavigation();
   const formik = useFormik({
-    initialValues: {
-      network: "",
-      sex: "",
-      dob: "",
-      newPassword: "",
-      confirmPassword: "",
-    },
+    initialValues: { newPassword: "", confirmPassword: "" },
     validationSchema,
     onSubmit: () => {
       if (formik.isValid) {
@@ -83,26 +55,15 @@ const SignUpScreenTwo = () => {
               source={require("../../assets/images/logo.png")}
               style={styles.logo}
             />
-            <Text style={styles.welcome}>Create Account</Text>
-            <Text style={styles.credentials}>
-              Register now to bet on the world’s biggest jackpots
-            </Text>
-
+            <Text style={styles.welcome}>Password Reset</Text>
+            <Text style={styles.credentials}>Create a new password</Text>
             <InputField
-              fieldType="datepicker"
-              label="Date Of Birth"
-              placeholder="mm-dd-yyyy"
-              value={formik.values.dob}
-              onChangeText={formik.handleChange("dob")}
-              error={formik.errors.dob}
-            />
-            <InputField
-              placeholder="Enter your new password"
+              placeholder="Enter your password"
               fieldType="password"
-              label="New Password"
+              label="Password"
               value={formik.values.newPassword}
               onChangeText={formik.handleChange("newPassword")}
-              error={formik.errors.newPassword}
+              error={formik.touched.newPassword && formik.errors.newPassword}
             />
             <InputField
               placeholder="Confirm your new password"
@@ -110,10 +71,13 @@ const SignUpScreenTwo = () => {
               label="Confirm Password"
               value={formik.values.confirmPassword}
               onChangeText={formik.handleChange("confirmPassword")}
-              error={formik.errors.confirmPassword}
+              error={
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+              }
             />
+
             <Button
-              title="Create Account"
+              title="Reset Password"
               onPress={() => formik.handleSubmit()}
             />
           </View>
@@ -180,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreenTwo;
+export default ForgotPasswordScreen;

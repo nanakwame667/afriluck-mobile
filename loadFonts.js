@@ -8,7 +8,7 @@ import {
   Poppins_900Black,
 } from "@expo-google-fonts/poppins";
 
-export default function LoadFonts(): boolean {
+export default function LoadFonts() {
   const [fontLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
