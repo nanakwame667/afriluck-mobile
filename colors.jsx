@@ -8,6 +8,9 @@ const colors = {
   background: "#FFFFFF",
   space: "#BCBCBC",
   icon: "#D8D8D8",
+  message: "#5E5E5E",
+  subText: "#7A7A7A",
+  icons: "#A3A3A3",
 };
 
 export default colors;
