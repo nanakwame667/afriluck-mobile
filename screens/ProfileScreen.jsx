@@ -84,6 +84,7 @@ const ProfileScreen = () => {
           <Item title={item.title} icon={item.icon} navigate={item.navigate} />
         )}
         keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

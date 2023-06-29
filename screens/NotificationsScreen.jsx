@@ -92,6 +92,7 @@ const NotificationsScreen = () => {
             <Item title={item.title} time={item.time} message={item.message} />
           )}
           keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </SafeAreaView>

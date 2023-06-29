@@ -11,6 +11,7 @@ const colors = {
   message: "#5E5E5E",
   subText: "#7A7A7A",
   icons: "#A3A3A3",
+  border: "#D9D9D9",
 };
 
 export default colors;
