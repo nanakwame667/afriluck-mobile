@@ -41,7 +41,7 @@ const MainNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="Update Password"
+        name="Change Password"
         component={ChangePassword}
         options={{
           headerStyle: { height: 120 },

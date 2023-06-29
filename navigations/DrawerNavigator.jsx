@@ -7,6 +7,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import { TouchableOpacity, Image, View } from "react-native";
 import { Badge } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import colors from "../colors";
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
@@ -49,7 +50,7 @@ const DrawerNavigator = () => {
           ),
           headerLeftContainerStyle: { paddingLeft: 30 },
           headerRightContainerStyle: { paddingRight: 30 },
-          headerStyle: { backgroundColor: "transparent", height: 150 },
+          headerStyle: { backgroundColor: colors.background, height: 120 },
         })}
       />
       <Drawer.Screen name="Games" component={GamesScreen} />
