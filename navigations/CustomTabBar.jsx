@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   tabActive: {
-    borderTopWidth: 6,
+    borderTopWidth: 3,
     borderTopColor: colors.tetiary,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,

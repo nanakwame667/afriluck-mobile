@@ -10,43 +10,12 @@ import NotificationsScreen from "../screens/NotificationsScreen";
 const Stack = createStackNavigator();
 
 const MainNavigator = () => {
-  const navigation = useNavigation();
-
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Tab"
-        component={BottomTabNavigator}
-        options={{
-          headerTitle: "",
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <Image source={require("../assets/images/menu.png")} />
-            </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Notifications")}
-            >
-              <View>
-                <Image source={require("../assets/images/bell.png")} />
-                <Badge
-                  status="error"
-                  containerStyle={{
-                    position: "absolute",
-                    top: -3,
-                    right: -2,
-                  }}
-                  badgeStyle={{ width: 10, height: 10, borderRadius: 10 }}
-                  size="large"
-                />
-              </View>
-            </TouchableOpacity>
-          ),
-          headerLeftContainerStyle: { paddingLeft: 30 },
-          headerRightContainerStyle: { paddingRight: 30 },
-          headerStyle: { backgroundColor: "transparent", height: 150 },
-        }}
+        name="Drawer"
+        component={DrawerNavigator}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
     </Stack.Navigator>
