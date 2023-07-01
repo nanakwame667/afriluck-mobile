@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import React, { useState, useCallback } from "react";
 import { TermsData } from "../../data/Terms";
 import { FlatList } from "react-native-gesture-handler";
@@ -70,7 +70,10 @@ const Terms = () => {
         />
       </View>
       <View style={styles.btn}>
-        <Button title="Accept" onPress={() => formik.handleSubmit()} />
+        <Button
+          title="Accept"
+          onPress={() => Alert.alert("Terms and Conditions Accepted")}
+        />
       </View>
     </View>
   );

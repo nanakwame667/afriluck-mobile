@@ -5,6 +5,7 @@ import ResultsScreen from "../screens/ResultsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import GamesScreen from "../screens/games/GamesScreen";
 import ScratchCardScreen from "../screens/games/ScratchCardScreen";
+import ResultsNavigator from "./Results";
 import { CustomTabBar } from "./CustomTabBar";
 
 const Tab = createBottomTabNavigator();
@@ -38,7 +39,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Results"
-        component={ResultsScreen}
+        component={ResultsNavigator}
         options={{
           headerShown: false,
           tabBarIcon: "profile",

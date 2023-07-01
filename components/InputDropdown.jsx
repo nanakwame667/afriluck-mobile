@@ -1,43 +1,60 @@
 import React, { useState } from "react";
-import { Button, Menu, Provider } from "react-native-paper";
+import DropDownPicker from "react-native-dropdown-picker";
+import { StyleSheet, View } from "react-native";
+import CustomText from "./CustomText";
+import colors from "../colors";
 
-const InputDropdown = ({ label, options, onOptionSelected, id, error }) => {
-  const [visible, setVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(label);
+function CustomDropDown({ items, onValueChange, placeholder, style, label }) {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
 
-  const openMenu = () => setVisible(true);
-
-  const closeMenu = () => setVisible(false);
-
-  const handleOptionSelected = (option) => {
-    setSelectedOption(option.label);
-    onOptionSelected(option.value);
-    closeMenu();
+  const handleChange = (val) => {
+    setValue(val);
+    onValueChange(val);
   };
 
-  const errorStyle = error ? { borderColor: "red", borderWidth: 1 } : null;
-
   return (
-    <Provider>
-      <Menu
-        visible={visible}
-        onDismiss={closeMenu}
-        anchor={
-          <Button onPress={openMenu} style={errorStyle}>
-            {selectedOption}
-          </Button>
-        }
+    <View>
+      <CustomText
+        style={{ fontSize: 16, color: colors.primary }}
+        weight="medium"
       >
-        {options.map((option, index) => (
-          <Menu.Item
-            key={index}
-            onPress={() => handleOptionSelected(option)}
-            title={option.label}
-          />
-        ))}
-      </Menu>
-    </Provider>
+        {label}
+      </CustomText>
+      <DropDownPicker
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={handleChange}
+        placeholder={placeholder}
+        style={[styles.dropdown, style]}
+        listItemContainerStyle={styles.listItemContainer}
+        dropDownContainerStyle={styles.dropDownContainer}
+        containerStyle={{ zIndex: 1000 }}
+      />
+    </View>
   );
-};
+}
 
-export default InputDropdown;
+export default CustomDropDown;
+
+const styles = StyleSheet.create({
+  dropdown: {
+    borderColor: colors.space,
+    height: 64,
+    borderRadius: 10,
+    marginVertical: 15,
+  },
+  listItemContainer: {
+    height: 70,
+    borderColor: colors.space,
+    borderWidth: 0.2,
+  },
+  dropDownContainer: {
+    borderColor: colors.space,
+    borderWidth: 0.2,
+    marginTop: 30,
+    borderRadius: 10,
+  },
+});

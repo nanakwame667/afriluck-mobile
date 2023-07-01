@@ -4,6 +4,7 @@ const colors = {
   tetiary: "#FF0000",
   heading: "#000000",
   accent: "#1AA9B0",
+  accentDeep: "#082F4D",
   text: "#848484",
   background: "#FFFFFF",
   space: "#BCBCBC",
