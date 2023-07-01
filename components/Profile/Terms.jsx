@@ -1,16 +1,20 @@
 import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { TermsData } from "../../data/Terms";
 import { FlatList } from "react-native-gesture-handler";
 import CustomText from "../CustomText";
 import colors from "../../colors";
 import { Fonts } from "../../theme";
+import Button from "../Button";
+import CheckBox from "../CheckBox";
 
 const Item = ({ title, description }) => {
   return (
     <View style={styles.item}>
-      <View>
-        <CustomText>{title}</CustomText>
+      <View style={{ paddingVertical: 10 }}>
+        <CustomText style={{ fontSize: 16 }} weight="medium">
+          {title}
+        </CustomText>
       </View>
       <View>
         <CustomText>{description}</CustomText>
@@ -20,10 +24,15 @@ const Item = ({ title, description }) => {
 };
 
 const Terms = () => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckedChanged = useCallback((checked) => {
+    setIsChecked(checked);
+  }, []);
   const renderHeader = () => (
     <View>
       <CustomText
-        weight="regular"
+        weight="medium"
         style={{
           fontSize: 14,
           color: colors.primary,
@@ -42,15 +51,27 @@ const Terms = () => {
   );
   return (
     <View style={styles.container}>
-      <FlatList
-        data={TermsData}
-        ListHeaderComponent={renderHeader}
-        renderItem={({ item }) => (
-          <Item title={item.title} description={item.description} />
-        )}
-        keyExtractor={(item) => item.id}
-        showsVerticalScrollIndicator={false}
-      />
+      <View style={{ flex: 0.8 }}>
+        <FlatList
+          data={TermsData}
+          ListHeaderComponent={renderHeader}
+          renderItem={({ item }) => (
+            <Item title={item.title} description={item.description} />
+          )}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+      <View style={styles.checked}>
+        <CheckBox
+          label="I agree with the Terms and Conditions"
+          isChecked={isChecked}
+          onCheckChange={handleCheckedChanged}
+        />
+      </View>
+      <View style={styles.btn}>
+        <Button title="Accept" onPress={() => formik.handleSubmit()} />
+      </View>
     </View>
   );
 };
@@ -89,9 +110,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   item: {
+    flex: 0.5,
     width: "100%",
     marginTop: 20,
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 30,
   },
   perItem: {
@@ -100,5 +122,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     alignItems: "center",
+  },
+  listContainer: {
+    flex: 0.5,
+  },
+  checked: {
+    flex: 0.1,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginTop: 20,
+    borderTopWidth: 0.18,
+    borderColor: colors.space,
+  },
+  btn: {
+    flex: 0.1,
+    paddingHorizontal: 20,
+    marginBottom: 30,
   },
 });

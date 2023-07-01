@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import colors from "../colors";
+import { Fonts } from "../theme";
 
 const CheckBox = ({ label, isChecked = false, onCheckChange }) => {
   const [checked, setChecked] = useState(isChecked);
@@ -16,7 +17,9 @@ const CheckBox = ({ label, isChecked = false, onCheckChange }) => {
       <View style={[styles.checkbox, checked && styles.checked]}>
         {checked && <FontAwesome name="check" size={15} color="white" />}
       </View>
-      <Text style={styles.label}>{label}</Text>
+      <View style={styles.labelContainer}>
+        <Text style={styles.label}>{label}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -39,8 +42,13 @@ const styles = StyleSheet.create({
   checked: {
     backgroundColor: colors.primary,
   },
+  labelContainer: {
+    flexShrink: 1,
+  },
   label: {
     fontSize: 16,
+    fontFamily: Fonts.regular,
+    flexWrap: "wrap",
   },
 });
 
