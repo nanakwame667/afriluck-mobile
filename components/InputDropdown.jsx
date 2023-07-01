@@ -4,7 +4,14 @@ import { StyleSheet, View } from "react-native";
 import CustomText from "./CustomText";
 import colors from "../colors";
 
-function CustomDropDown({ items, onValueChange, placeholder, style, label }) {
+function CustomDropDown({
+  items,
+  onValueChange,
+  placeholder,
+  style,
+  label,
+  labelStyle,
+}) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
 
@@ -16,7 +23,7 @@ function CustomDropDown({ items, onValueChange, placeholder, style, label }) {
   return (
     <View>
       <CustomText
-        style={{ fontSize: 16, color: colors.primary }}
+        style={[{ fontSize: 16, color: colors.primary }, labelStyle]}
         weight="medium"
       >
         {label}

@@ -17,6 +17,7 @@ import { Fonts } from "../../theme";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import CustomDropDown from "../InputDropdown";
 
 const validationSchema = yup.object().shape({
   fullname: yup
@@ -42,6 +43,12 @@ const validationSchema = yup.object().shape({
     .required("Phone Number is required"),
 });
 const EditProfile = () => {
+  const [selectedValue, setSelectedValue] = useState(null);
+
+  const items = [
+    { label: "Male", value: "Male" },
+    { label: "Female", value: "Female" },
+  ];
   const [selectedImage, setSelectedImage] = useState(null);
   const formik = useFormik({
     initialValues: {
@@ -125,6 +132,15 @@ const EditProfile = () => {
           onChangeText={formik.handleChange("username")}
           error={formik.errors.username}
         />
+        <View style={styles.dropdown}>
+          <CustomDropDown
+            items={items}
+            onValueChange={setSelectedValue}
+            placeholder="Select Type"
+            label={"Sex"}
+            labelStyle={{ fontSize: 14, color: colors.title }}
+          />
+        </View>
         <InputField
           placeholder="Enter your email address"
           fieldType="email"
@@ -157,6 +173,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "100%",
     backgroundColor: colors.background,
+  },
+  dropdown: {
+    flex: 0.2,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+    elevation: 1000,
   },
   uploadContainer: {
     flex: 0.3,
