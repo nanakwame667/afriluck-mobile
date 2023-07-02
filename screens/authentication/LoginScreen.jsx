@@ -50,7 +50,7 @@ const LoginScreen = () => {
     onSubmit: () => {
       if (formik.isValid) {
         setUserAuthenticated(true);
-        navigation.navigate("Tab");
+        navigation.navigate("Drawer", { screen: "Tab" });
       } else {
         Alert.alert(
           "Validation Error",
