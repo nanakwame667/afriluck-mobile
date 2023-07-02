@@ -13,6 +13,9 @@ const colors = {
   subText: "#7A7A7A",
   icons: "#A3A3A3",
   border: "#D9D9D9",
+  yellow: "#FCB604",
+  orange: "#ED7F13",
+  bronze: "#C0C0C0",
 };
 
 export default colors;

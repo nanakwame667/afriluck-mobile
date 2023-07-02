@@ -11,6 +11,7 @@ import React from "react";
 import CustomText from "../components/CustomText";
 import colors from "../colors";
 import { CarouselData } from "../data/Carousel";
+import { GamesData } from "../data/Games";
 import Button from "../components/Button";
 import { useNavigation } from "@react-navigation/native";
 
@@ -59,6 +60,88 @@ const Item = ({ title, subtitle, image }) => {
   );
 };
 
+const Game = ({ title, amount, button, image, btnColor }) => {
+  return (
+    <View style={styles.game}>
+      <View style={styles.backgroundContainer1}>
+        <ImageBackground source={image} style={styles.background1}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              paddingVertical: 10,
+              width: "100%",
+            }}
+          >
+            <CustomText
+              weight="semibold"
+              style={{ color: colors.background, fontSize: 13 }}
+            >
+              Mega Jackpot
+            </CustomText>
+            <View
+              style={{
+                width: 50,
+                height: 2,
+                marginLeft: 5,
+                backgroundColor: colors.background,
+              }}
+            ></View>
+          </View>
+          <View style={{ paddingVertical: 3, width: "50%" }}>
+            <CustomText
+              weight="bold"
+              style={{
+                color: colors.background,
+                fontSize: 16,
+                flexWrap: "wrap",
+              }}
+            >
+              {title}
+            </CustomText>
+          </View>
+          <View style={{ paddingVertical: 5, width: "50%" }}>
+            <CustomText
+              weight="extrabold"
+              style={{
+                color: colors.background,
+                fontSize: 20,
+                flexWrap: "wrap",
+              }}
+            >
+              {amount}
+            </CustomText>
+          </View>
+          <View style={{ flex: 1, justifyContent: "flex-end" }}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Drawer", {
+                  screen: "Tab",
+                  params: {
+                    screen: "Results",
+                    params: {
+                      screen: "Results1",
+                    },
+                  },
+                })
+              }
+              style={[styles.btn1, { backgroundColor: btnColor }]}
+            >
+              <CustomText
+                weight="semibold"
+                style={{ color: colors.background }}
+              >
+                {button}
+              </CustomText>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </View>
+    </View>
+  );
+};
+
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
@@ -95,6 +178,26 @@ const HomeScreen = () => {
           OUR GAMES
         </CustomText>
       </View>
+      <View style={{ flex: 0.5 }}>
+        <FlatList
+          data={GamesData}
+          numColumns={2}
+          key={2}
+          columnWrapperStyle={styles.row}
+          ListEmptyComponent={<Text>No data!</Text>}
+          renderItem={({ item }) => (
+            <Game
+              title={item.title}
+              amount={item.amount}
+              button={item.button}
+              btnColor={item.btnColor}
+              image={item.image}
+            />
+          )}
+          keyExtractor={(item) => item.id.toString()}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
     </View>
   );
 };
@@ -119,6 +222,21 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     paddingHorizontal: 20,
+    height: "100%", // <-- make this 100%
+    width: 290, // <-- make this 100%
+  },
+  backgroundContainer1: {
+    borderRadius: 20,
+    overflow: "hidden",
+    height: 240, // <-- add a height here
+    width: "100%", // <-- add a width here
+  },
+  background1: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    paddingHorizontal: 10,
     height: "100%", // <-- make this 100%
     width: 290, // <-- make this 100%
   },
@@ -147,5 +265,26 @@ const styles = StyleSheet.create({
     height: 50,
     paddingHorizontal: 10,
     marginVertical: 15,
+  },
+  btn1: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    height: 45,
+    paddingHorizontal: 10,
+    marginVertical: 15,
+    width: "100%",
+  },
+  game: {
+    flex: 1,
+    flexDirection: "column",
+    width: "100%",
+    margin: 5,
+  },
+  row: {
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    marginBottom: 10,
   },
 });
