@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
-import ResultsScreen from "../screens/ResultsScreen";
+import GamesNavigator from "./Games";
 import ProfileScreen from "../screens/ProfileScreen";
 import GamesScreen from "../screens/games/GamesScreen";
 import ScratchCardScreen from "../screens/games/ScratchCardScreen";
@@ -23,7 +23,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Games"
-        component={GamesScreen}
+        component={GamesNavigator}
         options={{
           headerShown: false,
           tabBarIcon: "rocket1",

@@ -61,6 +61,7 @@ const Item = ({ title, subtitle, image }) => {
 };
 
 const Game = ({ title, amount, button, image, btnColor }) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.game}>
       <View style={styles.backgroundContainer1}>
@@ -119,9 +120,9 @@ const Game = ({ title, amount, button, image, btnColor }) => {
                 navigation.navigate("Drawer", {
                   screen: "Tab",
                   params: {
-                    screen: "Results",
+                    screen: "Games",
                     params: {
-                      screen: "Results1",
+                      screen: "SingleGame",
                     },
                   },
                 })
