@@ -1,4 +1,8 @@
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import ResultsScreen from "../screens/ResultsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import GamesScreen from "../screens/games/GamesScreen";
@@ -9,7 +13,64 @@ import { Badge } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../colors";
 import logo from "../assets/images/logo.png";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Fonts } from "../theme";
 const Drawer = createDrawerNavigator();
+
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView
+      {...props}
+      style={{
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        fontFamily: Fonts.regular,
+      }}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          paddingVertical: 40,
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Image source={logo} style={{ width: 150, height: 50 }} />
+        <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
+          <MaterialCommunityIcons name="close" color={colors.text} size={24} />
+        </TouchableOpacity>
+      </View>
+      <DrawerItem
+        icon={({ color, size }) => (
+          <AntDesign name="rocket1" color={color} size={size} />
+        )}
+        label="Games"
+        onPress={() => props.navigation.navigate("Games")}
+      />
+      <DrawerItem
+        icon={({ color, size }) => (
+          <AntDesign name="barcode" color={color} size={size} />
+        )}
+        label="Scratch"
+        onPress={() => props.navigation.navigate("Scratch")}
+      />
+      <DrawerItem
+        icon={({ color, size }) => (
+          <AntDesign name="profile" color={color} size={size} />
+        )}
+        label="Results"
+        onPress={() => props.navigation.navigate("Results")}
+      />
+      <DrawerItem
+        icon={({ color, size }) => (
+          <AntDesign name="user" color={color} size={size} />
+        )}
+        label="Profile"
+        onPress={() => props.navigation.navigate("Profile")}
+      />
+    </DrawerContentScrollView>
+  );
+}
 
 const DrawerNavigator = () => {
   const navigation = useNavigation();
@@ -19,7 +80,9 @@ const DrawerNavigator = () => {
     });
   };
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
       <Drawer.Screen
         name="Afriluck"
         component={BottomTabNavigator}
@@ -54,10 +117,6 @@ const DrawerNavigator = () => {
           headerStyle: { backgroundColor: colors.background, height: 120 },
         })}
       />
-      <Drawer.Screen name="Games" component={GamesScreen} />
-      <Drawer.Screen name="Scratch" component={ScratchCardScreen} />
-      <Drawer.Screen name="Results" component={ResultsScreen} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
     </Drawer.Navigator>
   );
 };
