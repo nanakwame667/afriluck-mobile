@@ -8,6 +8,7 @@ import { TouchableOpacity, Image, View } from "react-native";
 import { Badge } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../colors";
+import logo from "../assets/images/logo.png";
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
@@ -20,7 +21,7 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen
-        name="Tab"
+        name="Afriluck"
         component={BottomTabNavigator}
         options={({ navigation }) => ({
           headerTitle: "",
