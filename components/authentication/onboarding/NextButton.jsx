@@ -49,7 +49,7 @@ const NextButton = ({ percentage, scrollTo, currentIndex, navigation }) => {
       progressAnimation.removeAllListeners();
     };
   }, [circumference, progressAnimation]);
-  const navigateToSignUp = () => {
+  const navigateToLogin = () => {
     navigation.navigate("Login");
   };
   return (
@@ -77,7 +77,17 @@ const NextButton = ({ percentage, scrollTo, currentIndex, navigation }) => {
         </Svg>
       )}
       {currentIndex === SlidesData.length - 1 ? (
-        <Button title="Get Started" onPress={navigateToSignUp} />
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-end",
+            width: "100%",
+          }}
+        >
+          <Button title="Get Started" onPress={navigateToLogin} />
+        </View>
       ) : (
         <TouchableOpacity
           onPress={scrollTo}
@@ -98,6 +108,8 @@ const styles = StyleSheet.create({
     flex: 0.8,
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
+    paddingHorizontal: 20,
   },
   button: {
     position: "absolute",
