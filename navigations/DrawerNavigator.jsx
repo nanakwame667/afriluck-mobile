@@ -8,7 +8,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import GamesScreen from "../screens/games/GamesScreen";
 import ScratchCardScreen from "../screens/games/ScratchCardScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
-import { TouchableOpacity, Image, View } from "react-native";
+import { TouchableOpacity, Image, View, BackHandler } from "react-native";
 import { Badge } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../colors";
@@ -22,6 +22,7 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView
       {...props}
       style={{
+        flex: 1,
         paddingHorizontal: 20,
         paddingVertical: 20,
         fontFamily: Fonts.regular,
@@ -29,6 +30,7 @@ function CustomDrawerContent(props) {
     >
       <View
         style={{
+          flex: 0.2,
           flexDirection: "row",
           paddingVertical: 40,
           alignItems: "center",
@@ -40,34 +42,53 @@ function CustomDrawerContent(props) {
           <MaterialCommunityIcons name="close" color={colors.text} size={24} />
         </TouchableOpacity>
       </View>
-      <DrawerItem
-        icon={({ color, size }) => (
-          <AntDesign name="rocket1" color={color} size={size} />
-        )}
-        label="Games"
-        onPress={() => props.navigation.navigate("Games")}
-      />
-      <DrawerItem
-        icon={({ color, size }) => (
-          <AntDesign name="barcode" color={color} size={size} />
-        )}
-        label="Scratch"
-        onPress={() => props.navigation.navigate("Scratch")}
-      />
-      <DrawerItem
-        icon={({ color, size }) => (
-          <AntDesign name="profile" color={color} size={size} />
-        )}
-        label="Results"
-        onPress={() => props.navigation.navigate("Results")}
-      />
-      <DrawerItem
-        icon={({ color, size }) => (
-          <AntDesign name="user" color={color} size={size} />
-        )}
-        label="Profile"
-        onPress={() => props.navigation.navigate("Profile")}
-      />
+      <View style={{ flex: 0.4, paddingVertical: 60 }}>
+        <DrawerItem
+          icon={({ color, size }) => (
+            <AntDesign name="rocket1" color={color} size={size} />
+          )}
+          label="Games"
+          onPress={() => props.navigation.navigate("Games")}
+        />
+        <DrawerItem
+          icon={({ color, size }) => (
+            <AntDesign name="gift" color={color} size={size} />
+          )}
+          label="Scratch"
+          onPress={() => props.navigation.navigate("Scratch")}
+        />
+        <DrawerItem
+          icon={({ color, size }) => (
+            <AntDesign name="profile" color={color} size={size} />
+          )}
+          label="Results"
+          onPress={() => props.navigation.navigate("Results")}
+        />
+        <DrawerItem
+          icon={({ color, size }) => (
+            <AntDesign name="user" color={color} size={size} />
+          )}
+          label="Profile"
+          onPress={() => props.navigation.navigate("Profile")}
+        />
+      </View>
+      <View
+        style={{
+          flex: 0.5,
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          height: 200,
+          color: colors.tetiary,
+        }}
+      >
+        <DrawerItem
+          icon={({ color, size }) => (
+            <AntDesign name="logout" color={colors.tetiary} size={24} />
+          )}
+          label="Exit"
+          onPress={() => BackHandler.exitApp()}
+        />
+      </View>
     </DrawerContentScrollView>
   );
 }

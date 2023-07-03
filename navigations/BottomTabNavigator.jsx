@@ -34,7 +34,7 @@ const BottomTabNavigator = () => {
         component={ScratchCardScreen}
         options={{
           headerShown: false,
-          tabBarIcon: "barcode",
+          tabBarIcon: "gift",
         }}
       />
       <Tab.Screen
