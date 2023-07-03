@@ -90,10 +90,11 @@ const ForgotPasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 16,
+    backgroundColor: colors.background,
   },
   keyboardAvoidingView: {
     flex: 1,
+    marginHorizontal: 16,
   },
   innerContainer: {
     flex: 1,

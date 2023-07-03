@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import NumberSelect from "./NumberSelect";
 import Button from "./Button";
 import PositionStatus from "./PositionStatus";
 import broom from "../assets/images/broom.png";
 import { NumberData } from "../data/NumberData";
+import colors from "../colors";
+import CustomText from "./CustomText";
 
 const PickNumberSelector = (props) => {
   const {
@@ -59,50 +61,38 @@ const PickNumberSelector = (props) => {
   };
 
   return (
-    <View style={{ flex: 1, padding: 3, alignItems: "center" }}>
-      <TouchableOpacity
-        onPress={() => {
-          setActiveSelector(activeSelector == selectorId ? -1 : selectorId);
-        }}
+    <View style={{ flex: 1, alignItems: "center" }}>
+      <View
         style={{
-          flex: 1,
           flexDirection: "row",
           justifyContent: "space-between",
-          padding: 5,
+          width: "100%",
+          paddingVertical: 30,
         }}
       >
-        <Text style={{ fontWeight: "bold", color: "#BCBCBC" }}>
-          <PositionStatus
-            isCurrent={activeSelector == selectorId}
-            position={selectorId + 1}
-          />
-        </Text>
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          {Array.from({ length: numberOfPick.value }).map((_, index) => (
-            <NumberSelect
-              id={`picked-${index}${selectorId}`}
-              checked={!!selectedNumbers[index]}
-              onChange={() => {
-                return false;
-              }}
-              type="checkbox"
-              size={"small"}
-              number={selectedNumbers[index]}
-            />
-          ))}
-        </View>
-        <Text style={{ fontWeight: "bold", color: counter > 0 ? "gray" : "" }}>
+        <CustomText
+          weight="medium"
+          style={{ fontWeight: "bold", color: colors.title }}
+        >
+          Numbers
+        </CustomText>
+        <CustomText
+          weight="semibold"
+          style={{ color: counter > 0 ? colors.primary : colors.text }}
+        >
           {counter}/{numberOfPick.value}
-        </Text>
-      </TouchableOpacity>
+        </CustomText>
+      </View>
+
       {activeSelector == selectorId && (
-        <React.Fragment>
+        <ScrollView showsVerticalScrollIndicator={true} style={{ flex: 1 }}>
           <View
             style={{
               flex: 1,
               flexDirection: "row",
-              justifyContent: "center",
-              padding: 8,
+              flexWrap: "wrap",
+              alignContent: "flex-start",
+              justifyContent: "space-between",
               alignItems: "center",
             }}
           >
@@ -121,47 +111,69 @@ const PickNumberSelector = (props) => {
               />
             ))}
           </View>
-          <View
+        </ScrollView>
+      )}
+      <View
+        style={{
+          flex: 0.3,
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <TouchableOpacity
+          onPress={clearSelections}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 4,
+            borderBottomWidth: 2,
+            borderBottomColor: colors.primary,
+            cursor: "pointer",
+            height: 50,
+            paddingVertical: 5,
+            marginHorizontal: 15,
+          }}
+        >
+          <Image source={broom} />
+          <CustomText
             style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "flex-end",
-              padding: 24,
+              fontSize: 16,
+              fontWeight: "normal",
+              color: colors.primary,
+              paddingLeft: 10,
             }}
           >
-            <TouchableOpacity
-              onPress={clearSelections}
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                padding: 4,
-                borderBottomWidth: 2,
-                borderBottomColor: "#FDDBC9",
-                cursor: "pointer",
-              }}
-            >
-              <Image source={broom} style={{ width: 24 }} />
-              <Text
-                style={{ fontSize: 18, fontWeight: "normal", color: "#FDDBC9" }}
-              >
-                Clear All
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={autoFill}
-              style={{
-                padding: 8,
-                backgroundColor: "#FDDBC9",
-                opacity: 0.6,
-                color: "#FDDBC9",
-                hoverBackgroundColor: "#FDDBC9",
-              }}
-            >
-              <Text>AutoFill</Text>
-            </TouchableOpacity>
-          </View>
-        </React.Fragment>
-      )}
+            Clear All
+          </CustomText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={autoFill}
+          style={{
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingHorizontal: 40,
+            backgroundColor: "#FDDBC9",
+            opacity: 0.6,
+            color: "#FDDBC9",
+            hoverBackgroundColor: "#FDDBC9",
+            height: 50,
+            borderRadius: 10,
+          }}
+        >
+          <CustomText
+            weight="semibold"
+            style={{
+              fontSize: 16,
+              color: colors.secondary,
+            }}
+          >
+            AutoFill
+          </CustomText>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

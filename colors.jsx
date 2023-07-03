@@ -16,6 +16,7 @@ const colors = {
   yellow: "#FCB604",
   orange: "#ED7F13",
   bronze: "#C0C0C0",
+  title: "#000",
 };
 
 export default colors;

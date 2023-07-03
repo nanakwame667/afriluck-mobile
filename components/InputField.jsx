@@ -18,6 +18,8 @@ import colors from "../colors";
 import PhoneNumberInput from "react-native-phone-number-input";
 import PhoneInput from "react-native-phone-number-input";
 import format from "date-fns/format";
+import CustomText from "./CustomText";
+import { Fonts } from "../theme";
 
 const InputField = forwardRef((props, ref) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -153,11 +155,13 @@ const InputField = forwardRef((props, ref) => {
             />
           </View>
         )}
-        {props.error && <Text style={styles.error}>{props.error}</Text>}
+        {props.error && (
+          <CustomText style={styles.error}>{props.error}</CustomText>
+        )}
         {props.characterLimit && remainingChars !== undefined && (
-          <Text style={styles.remaining}>
+          <CustomText style={styles.remaining}>
             Remaining characters: {remainingChars}
-          </Text>
+          </CustomText>
         )}
       </View>
     </TouchableWithoutFeedback>
@@ -166,9 +170,11 @@ const InputField = forwardRef((props, ref) => {
 
 const styles = StyleSheet.create({
   container: {
+    fontFamily: Fonts.regular,
     marginBottom: 20,
   },
   label: {
+    fontFamily: Fonts.regular,
     marginBottom: 10,
   },
   inputContainer: {
@@ -199,6 +205,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     width: "100%",
+    fontFamily: Fonts.regular,
   },
   input1: {
     flex: 1,

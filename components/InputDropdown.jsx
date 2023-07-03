@@ -52,16 +52,19 @@ const styles = StyleSheet.create({
     height: 64,
     borderRadius: 10,
     marginVertical: 15,
+    zIndex: 1000,
   },
   listItemContainer: {
     height: 70,
     borderColor: colors.space,
     borderWidth: 0.2,
+    zIndex: 1000,
   },
   dropDownContainer: {
     borderColor: colors.space,
     borderWidth: 0.2,
     marginTop: 30,
     borderRadius: 10,
+    zIndex: 1000,
   },
 });

@@ -5,14 +5,19 @@ import {
   SafeAreaView,
   ScrollView,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import colors from "../../../colors";
 import CustomText from "../../../components/CustomText";
 import { Fonts } from "../../../theme";
 import PickNumberSelector from "../../../components/PickNumberSelector";
+import Button from "../../../components/Button";
+import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const NumberPick = () => {
+  const navigation = useNavigation();
   const [selectedNumbers, setSelectedNumbers] = useState([]);
   const [activeSelector, setActiveSelector] = useState(1);
   const numberOfPick = { value: 6 };
@@ -27,7 +32,20 @@ const NumberPick = () => {
           BIG WIN JACKPOT
         </CustomText>
       </View>
-      <View style={{ flex: 1 }}>
+      <View
+        style={{ flexDirection: "row", alignItems: "center", width: "100%" }}
+      >
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Entypo name={"chevron-small-left"} size={40} color={colors.text} />
+        </TouchableOpacity>
+        <CustomText
+          weight="semibold"
+          style={{ fontSize: 18, color: colors.primary, paddingHorizontal: 40 }}
+        >
+          Pick Your Numbers
+        </CustomText>
+      </View>
+      <View style={{ flex: 0.9 }}>
         <PickNumberSelector
           selectorId={1}
           selectedNumbers={selectedNumbers}
@@ -36,6 +54,12 @@ const NumberPick = () => {
           activeSelector={activeSelector}
           setActiveSelector={setActiveSelector}
           isValid={isValid}
+        />
+      </View>
+      <View style={{ flex: 0.2 }}>
+        <Button
+          title={"Continue"}
+          onPress={() => navigation.navigate("Payment")}
         />
       </View>
     </SafeAreaView>

@@ -11,6 +11,7 @@ import {
   Keyboard,
   Image,
   Alert,
+  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -20,6 +21,7 @@ import colors from "../../colors";
 import CheckBox from "../../components/CheckBox";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import CustomDropDown from "../../components/InputDropdown";
 
 const validationSchema = yup.object().shape({
   network: yup
@@ -41,6 +43,18 @@ const validationSchema = yup.object().shape({
     .required("Confirm Password is required"),
 });
 const SignUpScreenTwo = () => {
+  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue1, setSelectedValue1] = useState(null);
+
+  const items = [
+    { label: "Male", value: "Male" },
+    { label: "Female", value: "Female" },
+  ];
+  const items1 = [
+    { label: "MTN", value: "MTN" },
+    { label: "Vodafone", value: "Vodafone" },
+    { label: "AirtelTigo", value: "AirtelTigo" },
+  ];
   const navigation = useNavigation();
   const handleOptionSelected = (option) => {
     console.log("Selected option:", option);
@@ -87,38 +101,86 @@ const SignUpScreenTwo = () => {
             <Text style={styles.credentials}>
               Register now to bet on the world’s biggest jackpots
             </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
 
-            <InputField
-              fieldType="datepicker"
-              label="Date Of Birth"
-              placeholder="mm-dd-yyyy"
-              value={formik.values.dob}
-              onChangeText={formik.handleChange("dob")}
-              error={formik.errors.dob}
-            />
-            <InputField
-              placeholder="Enter your new password"
-              fieldType="password"
-              label="New Password"
-              value={formik.values.newPassword}
-              onChangeText={formik.handleChange("newPassword")}
-              error={formik.errors.newPassword}
-            />
-            <InputField
-              placeholder="Confirm your new password"
-              fieldType="password"
-              label="Confirm Password"
-              value={formik.values.confirmPassword}
-              onChangeText={formik.handleChange("confirmPassword")}
-              error={formik.errors.confirmPassword}
-            />
-            <Button
-              title="Create Account"
-              onPress={() => formik.handleSubmit()}
-            />
+                zIndex: 1000,
+              }}
+            >
+              <View style={styles.dropdown}>
+                <CustomDropDown
+                  items={items1}
+                  onValueChange={setSelectedValue1}
+                  placeholder="Select Type"
+                  label={"Mobile Network"}
+                  labelStyle={{ fontSize: 14, color: colors.title }}
+                />
+              </View>
+              <View style={[styles.dropdown, { paddingLeft: 20 }]}>
+                <CustomDropDown
+                  items={items}
+                  onValueChange={setSelectedValue}
+                  placeholder="Select Type"
+                  label={"Sex"}
+                  labelStyle={{ fontSize: 14, color: colors.title }}
+                />
+              </View>
+            </View>
+            <ScrollView style={{ flex: 1, width: "100%" }}>
+              <InputField
+                fieldType="datepicker"
+                label="Date Of Birth"
+                placeholder="mm-dd-yyyy"
+                value={formik.values.dob}
+                onChangeText={formik.handleChange("dob")}
+                error={formik.errors.dob}
+              />
+              <InputField
+                placeholder="Enter your new password"
+                fieldType="password"
+                label="New Password"
+                value={formik.values.newPassword}
+                onChangeText={formik.handleChange("newPassword")}
+                error={formik.errors.newPassword}
+              />
+              <InputField
+                placeholder="Confirm your new password"
+                fieldType="password"
+                label="Confirm Password"
+                value={formik.values.confirmPassword}
+                onChangeText={formik.handleChange("confirmPassword")}
+                error={formik.errors.confirmPassword}
+              />
+            </ScrollView>
           </View>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
+      <View
+        style={{
+          flex: 0.28,
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          alignItems: "flex-start",
+          width: "100%",
+          paddingTop: 20,
+          paddingHorizontal: 16,
+        }}
+      >
+        <CheckBox
+          label="By creating a new account I accept the terms and conditions."
+          isChecked={isChecked}
+          onCheckChange={handleCheckedChanged}
+        />
+        <View style={{ width: "100%" }}>
+          <Button
+            title="Create Account"
+            onPress={() => navigation.navigate("Login")}
+          />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -126,10 +188,11 @@ const SignUpScreenTwo = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 16,
+    backgroundColor: colors.background,
   },
   keyboardAvoidingView: {
     flex: 1,
+    paddingHorizontal: 16,
   },
   innerContainer: {
     flex: 1,
@@ -177,6 +240,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     marginVertical: 20,
+  },
+  dropdown: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+    elevation: 1000,
   },
 });
 
