@@ -7,7 +7,7 @@ import Payment from "../../screens/games/SingleGame/Payment";
 
 const Stack = createStackNavigator();
 
-const GamesNavigator = () => {
+const GameNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -34,4 +34,4 @@ const GamesNavigator = () => {
   );
 };
 
-export default GamesNavigator;
+export default GameNavigator;

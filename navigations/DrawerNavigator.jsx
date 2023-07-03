@@ -105,7 +105,7 @@ const DrawerNavigator = () => {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen
-        name="Afriluck"
+        name="Tab"
         component={BottomTabNavigator}
         options={({ navigation }) => ({
           headerTitle: "",

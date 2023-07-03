@@ -1,11 +1,11 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
-import GamesNavigator from "./Games";
+import GameNavigator from "./Games/GameNavigator";
 import ProfileScreen from "../screens/ProfileScreen";
 import GamesScreen from "../screens/games/GamesScreen";
 import ScratchCardScreen from "../screens/games/ScratchCardScreen";
-import ResultsNavigator from "./Results";
+import ResultsNavigator from "./Results/ResultNavigator";
 import { CustomTabBar } from "./CustomTabBar";
 
 const Tab = createBottomTabNavigator();
@@ -23,7 +23,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Games"
-        component={GamesNavigator}
+        component={GameNavigator}
         options={{
           headerShown: false,
           tabBarIcon: "rocket1",
