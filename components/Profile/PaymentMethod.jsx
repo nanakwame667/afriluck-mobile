@@ -20,7 +20,7 @@ import vodafone from "../../assets/images/vodafone.png";
 import airtel from "../../assets/images/airtel.png";
 
 const PaymentMethod = () => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("Card");
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvc, setCvc] = useState("");
@@ -150,8 +150,8 @@ const PaymentMethod = () => {
           }}
         >
           <View style={styles.option}>
-            <Image source={mtn} style={{ marginRight: 2 }} />
-            <Image source={airtel} style={{ marginRight: 2 }} />
+            <Image source={mtn} style={{ marginRight: 6 }} />
+            <Image source={airtel} style={{ marginRight: 6 }} />
             <Image source={vodafone} style={{ marginRight: 15 }} />
             <CustomText
               style={[
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#DDD",
-    borderRadius: 5,
+    borderRadius: 8,
     padding: 20,
     marginBottom: 15,
   },
